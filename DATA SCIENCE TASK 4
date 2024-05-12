@@ -1,0 +1,43 @@
+from textblob import TextBlob
+import random
+import matplotlib.pyplot as plt
+
+# Generate random sample tweets
+num_tweets = 100
+sample_tweets = []
+for _ in range(num_tweets):
+    # Randomly generate tweet sentiment
+    sentiment = random.choice(['positive', 'negative', 'neutral'])
+    if sentiment == 'positive':
+        sample_tweets.append("I love this product, it's amazing!")
+    elif sentiment == 'negative':
+        sample_tweets.append("This product is terrible, I regret buying it.")
+    else:
+        sample_tweets.append("Neutral tweet about the product.")
+
+# Initialize sentiment scores
+positive_count = 0
+negative_count = 0
+neutral_count = 0
+
+# Perform sentiment analysis
+for tweet in sample_tweets:
+    analysis = TextBlob(tweet)
+    # Classify sentiment
+    if analysis.sentiment.polarity > 0:
+        positive_count += 1
+    elif analysis.sentiment.polarity < 0:
+        negative_count += 1
+    else:
+        neutral_count += 1
+
+# Visualize sentiment distribution using a bar chart
+labels = ['Positive', 'Negative', 'Neutral']
+sizes = [positive_count, negative_count, neutral_count]
+colors = ['green', 'red', 'grey']
+
+plt.bar(labels, sizes, color=colors)
+plt.xlabel('Sentiment')
+plt.ylabel('Count')
+plt.title('Sentiment Analysis of Random Sample Tweets')
+plt.show()
